@@ -1,12 +1,12 @@
-import Ticekt from "../(models)/Ticket";
+import Ticket from "../../(models)/Ticket";
 import { NextResponse } from "next/server";
-import TicketCard from "../(components)/TicketCard";
 
 export async function POST(req) {
+  console.log("Post Ran");
   try {
     const body = await req.json();
     const ticketData = body.formData;
-    await TicketCard.create(tickeData);
+    await Ticket.create(ticketData);
 
     return NextResponse.json({ message: "Ticket Created" }, { status: 201 });
   } catch (error) {

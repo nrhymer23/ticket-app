@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const TicketForm = () => {
+  const router = useRouter();
+
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -14,8 +16,44 @@ const TicketForm = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const res = await fetch("/api/Tickets", {
+  //       method: "POST",
+  //       body: JSON.stringify({ formData }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error(
+  //         `Failed to create Ticket. Status: ${res.status}, ${await res.text()}`
+  //       );
+  //     }
+
+  //     router.refresh();
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await fetch("/api/Tickets", {
+      method: "POST",
+      body: JSON.stringify({ formData }),
+      "content-type": "application/json",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to create Ticket.");
+    }
+    router.refresh();
+    router.push("/");
   };
 
   const startingTicketData = {
